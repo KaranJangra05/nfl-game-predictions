@@ -1,0 +1,16 @@
+feature,coefficient
+epa_diff_3,1.576616944889496
+rolling_off_epa_3,0.7971915557711053
+win_pct_diff_3,0.5254467931571417
+is_home,0.37883273621606867
+rolling_win_pct_3,0.2645195519050636
+turnover_diff_3,0.028364978191084925
+rolling_points_for_3,0.02103998458693796
+rolling_turnovers_3,0.013386503160328892
+rolling_points_against_3,0.004171260180651506
+rest_days,-0.0025375216578810917
+opp_rolling_points_against_3,-0.0043348387123460005
+opp_rolling_turnovers_3,-0.01497847503075283
+opp_rolling_points_for_3,-0.02176094916228432
+opp_rolling_win_pct_3,-0.26092724125196726
+opp_rolling_off_epa_3,-0.779425389118212

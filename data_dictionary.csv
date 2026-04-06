@@ -1,0 +1,49 @@
+variable_name,table_name,data_type,description,source,transformation
+game_id,games,text,Unique identifier for each NFL game,schedules raw data,Selected from raw schedules and kept unchanged
+season,games,integer,NFL season year,schedules raw data,Selected from raw schedules
+week,games,integer,Regular season week number,schedules raw data,Selected from raw schedules
+gameday,games,date,Date of the game,schedules raw data,Selected from raw schedules and stored as date
+away_team,games,text,Away team abbreviation,schedules raw data,Selected from raw schedules
+away_score,games,integer,Final score for away team,schedules raw data,Selected from raw schedules
+home_team,games,text,Home team abbreviation,schedules raw data,Selected from raw schedules
+home_score,games,integer,Final score for home team,schedules raw data,Selected from raw schedules
+away_rest,games,integer,Days of rest for away team before game,schedules raw data,Selected from raw schedules
+home_rest,games,integer,Days of rest for home team before game,schedules raw data,Selected from raw schedules
+team,team_games_base,text,Team abbreviation for one team-game row,Derived from games table,Created by reshaping each game into one row per team
+opponent,team_games_base,text,Opponent team abbreviation,Derived from games table,Created by reshaping each game into one row per team
+points_for,team_games_base,integer,Points scored by the team in that game,Derived from games table,Created from home_score or away_score based on team role
+points_against,team_games_base,integer,Points allowed by the team in that game,Derived from games table,Created from opponent score based on team role
+rest_days,team_games_base,integer,Days of rest for the team before the game,Derived from games table,Created from home_rest or away_rest based on team role
+is_home,team_games_base,integer,Indicator for whether team played at home (1=yes 0=no),Derived from games table,Created during home/away reshaping
+win,team_games_base,integer,Target outcome variable where 1=win and 0=loss,Derived from final scores,Created by comparing points_for and points_against
+offensive_plays,team_games_with_stats,integer,Number of offensive run and pass plays by team in game,Play-by-play raw data,Aggregated from filtered regular season offensive plays
+off_epa_per_play,team_games_with_stats,float,Average offensive EPA per play for team in game,Play-by-play raw data,Mean EPA across filtered run and pass plays
+pass_plays,team_games_with_stats,integer,Number of pass plays by team in game,Play-by-play raw data,Count of play_type equal to pass
+rush_plays,team_games_with_stats,integer,Number of run plays by team in game,Play-by-play raw data,Count of play_type equal to run
+interceptions_thrown,team_games_with_stats,integer,Number of interceptions thrown by team in game,Play-by-play raw data,Summed from interception indicator
+fumbles_lost,team_games_with_stats,integer,Number of lost fumbles by team in game,Play-by-play raw data,Summed from fumble_lost indicator
+pass_rate,team_games_with_stats,float,Share of offensive plays that were passes,Derived from play counts,Calculated as pass_plays divided by offensive_plays
+turnovers,team_games_with_stats,integer,Total turnovers committed by team in game,Derived from play-by-play indicators,Calculated as interceptions_thrown plus fumbles_lost
+point_diff,team_games_with_rolling,float,Point differential for the game,Derived from team_games_base,Calculated as points_for minus points_against
+prev_points_for,team_games_with_rolling,float,Points scored in previous game by same team,Derived from team history,Created using 1-game lag within each team
+prev_points_against,team_games_with_rolling,float,Points allowed in previous game by same team,Derived from team history,Created using 1-game lag within each team
+prev_win,team_games_with_rolling,float,Previous game result for same team,Derived from team history,Created using 1-game lag within each team
+prev_off_epa_per_play,team_games_with_rolling,float,Previous game offensive EPA per play for same team,Derived from team history,Created using 1-game lag within each team
+prev_turnovers,team_games_with_rolling,float,Previous game turnovers for same team,Derived from team history,Created using 1-game lag within each team
+prev_point_diff,team_games_with_rolling,float,Previous game point differential for same team,Derived from team history,Created using 1-game lag within each team
+rolling_points_for_3,team_games_with_rolling,float,Average points scored over previous 3 games,Derived from team history,Calculated using shifted 3-game rolling mean
+rolling_points_against_3,team_games_with_rolling,float,Average points allowed over previous 3 games,Derived from team history,Calculated using shifted 3-game rolling mean
+rolling_win_pct_3,team_games_with_rolling,float,Win percentage over previous 3 games,Derived from team history,Calculated using shifted 3-game rolling mean of win
+rolling_off_epa_3,team_games_with_rolling,float,Average offensive EPA per play over previous 3 games,Derived from team history,Calculated using shifted 3-game rolling mean
+rolling_turnovers_3,team_games_with_rolling,float,Average turnovers over previous 3 games,Derived from team history,Calculated using shifted 3-game rolling mean
+rolling_point_diff_3,team_games_with_rolling,float,Average point differential over previous 3 games,Derived from team history,Calculated using shifted 3-game rolling mean
+opp_rolling_points_for_3,model_features,float,Opponent average points scored over previous 3 games,Derived from joined opponent rolling table,Joined from opponent row for same game
+opp_rolling_points_against_3,model_features,float,Opponent average points allowed over previous 3 games,Derived from joined opponent rolling table,Joined from opponent row for same game
+opp_rolling_win_pct_3,model_features,float,Opponent win percentage over previous 3 games,Derived from joined opponent rolling table,Joined from opponent row for same game
+opp_rolling_off_epa_3,model_features,float,Opponent offensive EPA per play over previous 3 games,Derived from joined opponent rolling table,Joined from opponent row for same game
+opp_rolling_turnovers_3,model_features,float,Opponent average turnovers over previous 3 games,Derived from joined opponent rolling table,Joined from opponent row for same game
+opp_rolling_point_diff_3,model_features,float,Opponent average point differential over previous 3 games,Derived from joined opponent rolling table,Joined from opponent row for same game
+epa_diff_3,model_features,float,Difference between team and opponent rolling offensive EPA over previous 3 games,Derived feature,Calculated as rolling_off_epa_3 minus opp_rolling_off_epa_3
+win_pct_diff_3,model_features,float,Difference between team and opponent rolling win percentage over previous 3 games,Derived feature,Calculated as rolling_win_pct_3 minus opp_rolling_win_pct_3
+turnover_diff_3,model_features,float,Difference between team and opponent rolling turnovers over previous 3 games,Derived feature,Calculated as rolling_turnovers_3 minus opp_rolling_turnovers_3
+point_diff_gap_3,model_features,float,Difference between team and opponent rolling point differential over previous 3 games,Derived feature,Calculated as rolling_point_diff_3 minus opp_rolling_point_diff_3
