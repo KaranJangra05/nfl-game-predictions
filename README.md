@@ -3,6 +3,8 @@
 ## Overview
 This project builds an end-to-end analytics pipeline using public NFL data from nflverse for the 2024 and 2025 regular seasons. The goal is to predict NFL game outcomes using pre-game team performance indicators.
 
+Link to Video Demo: https://youtu.be/8V798OWAyCg
+
 ## Question
 Which pre-game indicators are the strongest predictors of NFL game outcomes?
 
