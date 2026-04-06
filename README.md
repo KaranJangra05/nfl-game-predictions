@@ -50,7 +50,7 @@ Best model: `win_pct_only`
 Best test accuracy: **63.24%**
 
 Benchmarks:
-- Home-team baseline: **53.86%**
+- Home-team baseline: **53.83%**
 - Win percentage differential baseline: **63.24%**
 
 ## Main Finding
